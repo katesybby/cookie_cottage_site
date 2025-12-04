@@ -26,8 +26,10 @@
         <a href="#menu">Menu</a>
         <a href="#rexburg">Rexburg</a>
         <a href="#story">Our Story</a>
+        <a href="#sodas">Sodas & Cocoa</a>
         <a href="#contact">Contact</a>
-        <a href="https://www.facebook.com/profile.php?id=100063707806424" target="_blank" class="nav-cta">
+        <a href="#" id="cart-toggle">Cart (<span id="cart-count">0</span>)</a>
+        <a href="https://www.facebook.com/therigbycookiecottage" target="_blank" class="nav-cta">
           Facebook
         </a>
       </nav>
@@ -172,6 +174,100 @@
       </div>
     </section>
 
+        <!-- SODAS & COCOA -->
+    <section id="sodas">
+      <div class="section-label">Drinks</div>
+      <h2 class="section-title">Sodas & Seasonal Sips</h2>
+      <p class="section-intro">
+        Pink, fizzy, cozy – built to match your cookie and your main-character energy.
+      </p>
+
+      <div class="menu-grid">
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Build-Your-Own Soda</h3>
+            <span class="menu-price">$2.50</span>
+          </div>
+          <p class="menu-note">
+            Start with Coke, Diet Coke, Dr Pepper, Sprite, or Root Beer. Add up to two flavor shots
+            (coconut, vanilla, raspberry, lime, peach, caramel) + optional cream.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Pink Power Fizz</h3>
+            <span class="menu-price">$3.00</span>
+          </div>
+          <p class="menu-note">
+            Sprite + raspberry + coconut + a splash of cream. Barbie-core in a cup.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Boss Babe Bubbly</h3>
+            <span class="menu-price">$3.00</span>
+          </div>
+          <p class="menu-note">
+            Coke + cherry + vanilla + fresh lime. For closing deals and passing exams.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">CEO Cherry Lime</h3>
+            <span class="menu-price">$3.00</span>
+          </div>
+          <p class="menu-note">
+            Diet Coke + cherry + extra lime. Zero chill, zero sugar, full power.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Girlboss Glo-Up</h3>
+            <span class="menu-price">$3.00</span>
+          </div>
+          <p class="menu-note">
+            Dr Pepper + coconut + vanilla cream. Feels like turning in every assignment early.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Study Session Refresher</h3>
+            <span class="menu-price">$3.00</span>
+          </div>
+          <p class="menu-note">
+            Sprite + peach + raspberry + extra ice. Built for group projects and late-night labs.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Cozy Queen Cocoa</h3>
+            <span class="menu-price">$3.25</span>
+          </div>
+          <p class="menu-note">
+            Rich hot cocoa with whipped cream. Seasonal upgrades: peppermint, toasted marshmallow, or caramel drizzle.
+          </p>
+        </article>
+
+        <article class="menu-card">
+          <div class="menu-card-header">
+            <h3 class="menu-name">Rexburg Snow Day Cocoa</h3>
+            <span class="menu-price">$3.50</span>
+          </div>
+          <p class="menu-note">
+            Dark chocolate cocoa + marshmallows + crushed candy cane.
+            Best served with a sugar cookie and a late start.
+          </p>
+        </article>
+      </div>
+    </section>
+
+
     <!-- STORY -->
     <section id="story">
       <div class="section-label">Our Story</div>
@@ -253,6 +349,31 @@
       </a>
     </div>
   </div>
+
+<!-- Right-side Cart Panel -->
+    <div id="cart-panel" class="cart-panel hidden">
+        <div class="cart-panel-inner">
+            <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="cart-close" aria-label="Close cart">×</button>
+            </div>
+
+            <div id="cart-items">
+            <!-- JS will inject cart item cards here -->
+            </div>
+
+            <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="btn-primary cart-checkout">
+                Checkout
+            </button>
+            </div>
+        </div>
+    </div>
+
 
   <footer class="site-footer">
     <div class="footer-inner">

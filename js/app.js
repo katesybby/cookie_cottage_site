@@ -62,9 +62,48 @@ function renderMenu(items) {
 
     card.appendChild(header);
     card.appendChild(tagWrap);
+
+    // subtle qty controls instead of big button
+    const controls = document.createElement("div");
+    controls.className = "menu-cart-controls";
+
+    const label = document.createElement("span");
+    label.className = "cart-qty-label";
+    label.textContent = "Qty:";
+
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "cart-qty-btn";
+    minusBtn.textContent = "−";
+
+    const qtySpan = document.createElement("span");
+    qtySpan.className = "cart-qty-display";
+    qtySpan.textContent = getCartQuantity(item.name);
+
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "cart-qty-btn";
+    plusBtn.textContent = "+";
+
+    minusBtn.addEventListener("click", () => {
+      removeOneFromCart(item.name);
+      qtySpan.textContent = getCartQuantity(item.name);
+    });
+
+    plusBtn.addEventListener("click", () => {
+      addToCart(item);
+      qtySpan.textContent = getCartQuantity(item.name);
+    });
+
+    controls.appendChild(label);
+    controls.appendChild(minusBtn);
+    controls.appendChild(qtySpan);
+    controls.appendChild(plusBtn);
+
+    card.appendChild(controls);
     grid.appendChild(card);
   });
 }
+
+
 
 // ---------- FILTERS / SEARCH ----------
 
@@ -188,6 +227,176 @@ function initPromoPopup() {
   promoTimeoutId = setTimeout(showPromo, 1500);
 }
 
+// ---------- SIMPLE CART ----------
+// ---------- SIMPLE CART (SIDEBAR) ----------
+
+const cart = []; // array of { name, price, qty }
+
+function findCartItem(name) {
+  return cart.find(entry => entry.name === name);
+}
+
+function getCartQuantity(name) {
+  const entry = findCartItem(name);
+  return entry ? entry.qty : 0;
+}
+
+function addToCart(item) {
+  const existing = findCartItem(item.name);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name: item.name, price: item.price, qty: 1 });
+  }
+  updateCartDisplay();
+}
+
+function removeOneFromCart(name) {
+  const existing = findCartItem(name);
+  if (!existing) return;
+
+  existing.qty -= 1;
+  if (existing.qty <= 0) {
+    const idx = cart.indexOf(existing);
+    if (idx !== -1) cart.splice(idx, 1);
+  }
+  updateCartDisplay();
+}
+
+function updateCartDisplay() {
+  const countEl = document.getElementById("cart-count");
+  const itemsContainer = document.getElementById("cart-items");
+  const totalEl = document.getElementById("cart-total");
+
+  // item count in navbar
+  const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
+  if (countEl) countEl.textContent = totalCount;
+
+  if (!itemsContainer) return;
+
+  itemsContainer.innerHTML = "";
+
+  if (cart.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "menu-note";
+    empty.textContent = "Your cart is empty. Add some cookies from the menu. 🍪";
+    itemsContainer.appendChild(empty);
+    if (totalEl) totalEl.textContent = "$0.00";
+    // also refresh menu so quantities show 0
+    applyFilters();
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach(entry => {
+    total += entry.price * entry.qty;
+
+    const card = document.createElement("article");
+    card.className = "menu-card";
+
+    const header = document.createElement("div");
+    header.className = "menu-card-header";
+
+    const nameEl = document.createElement("h3");
+    nameEl.className = "menu-name";
+    nameEl.textContent = entry.name;
+
+    const linePrice = document.createElement("span");
+    linePrice.className = "menu-price";
+    linePrice.textContent = `${entry.qty} × ${formatPrice(entry.price)}`;
+
+    header.appendChild(nameEl);
+    header.appendChild(linePrice);
+    card.appendChild(header);
+
+    const controls = document.createElement("div");
+    controls.className = "menu-cart-controls";
+
+    const label = document.createElement("span");
+    label.className = "cart-qty-label";
+    label.textContent = "Qty:";
+
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "cart-qty-btn";
+    minusBtn.textContent = "−";
+
+    const qtySpan = document.createElement("span");
+    qtySpan.className = "cart-qty-display";
+    qtySpan.textContent = entry.qty;
+
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "cart-qty-btn";
+    plusBtn.textContent = "+";
+
+    minusBtn.addEventListener("click", () => {
+      removeOneFromCart(entry.name);
+    });
+
+    plusBtn.addEventListener("click", () => {
+      addToCart({ name: entry.name, price: entry.price });
+    });
+
+    controls.appendChild(label);
+    controls.appendChild(minusBtn);
+    controls.appendChild(qtySpan);
+    controls.appendChild(plusBtn);
+
+    card.appendChild(controls);
+
+    const totalLine = document.createElement("p");
+    totalLine.className = "menu-note";
+    totalLine.textContent = `Item total: ${formatPrice(entry.price * entry.qty)}`;
+    card.appendChild(totalLine);
+
+    itemsContainer.appendChild(card);
+  });
+
+  if (totalEl) totalEl.textContent = formatPrice(total);
+
+  // refresh menu cards so their qty displays match
+  applyFilters();
+}
+
+function toggleCartPanel(show) {
+  const panel = document.getElementById("cart-panel");
+  if (!panel) return;
+
+  if (typeof show === "boolean") {
+    if (show) {
+      panel.classList.remove("hidden");
+    } else {
+      panel.classList.add("hidden");
+    }
+  } else {
+    panel.classList.toggle("hidden");
+  }
+}
+
+function initCartUI() {
+  const toggle = document.getElementById("cart-toggle");
+  const panel = document.getElementById("cart-panel");
+  const closeBtn = panel ? panel.querySelector(".cart-close") : null;
+  const checkoutBtn = document.getElementById("checkout-btn");
+
+  if (toggle) {
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleCartPanel();
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => toggleCartPanel(false));
+  }
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      window.location.href = "checkout.html";
+    });
+  }
+}
+
 
 // ---------- INIT ----------
 
@@ -198,6 +407,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initNavToggle();
   initFooterYear();
   initPromoPopup();
+  initCartUI();
+  updateCartDisplay();
 });
 
 // expose scrollToMenu globally for button onclick
