@@ -665,6 +665,11 @@ header.navbar {
   justify-content: center;
 }
 
+/* Make sure the popup actually hides when it has the hidden class */
+.promo-overlay.hidden {
+  display: none;
+}
+
 .promo-backdrop {
   position: absolute;
   inset: 0;

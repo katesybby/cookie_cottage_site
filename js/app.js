@@ -1,5 +1,7 @@
 // js/app.js
 
+// ---------- UTILITIES ----------
+
 function formatPrice(num) {
   return `$${num.toFixed(2)}`;
 }
@@ -17,38 +19,7 @@ function createTagElements(item) {
   return [...new Set(tags)];
 }
 
-function initPromoPopup() {
-  const overlay = document.getElementById("promo-overlay");
-  if (!overlay) return;
-
-  const CLOSE_KEY = "cc-rexburg-promo-seen";
-
-  try {
-    if (localStorage.getItem(CLOSE_KEY)) return;
-  } catch (e) {
-    // ignore if localStorage is blocked
-  }
-
-  const show = () => {
-    overlay.classList.remove("hidden");
-  };
-
-  const close = () => {
-    overlay.classList.add("hidden");
-    try {
-      localStorage.setItem(CLOSE_KEY, "1");
-    } catch (e) {}
-  };
-
-  const backdrop = overlay.querySelector(".promo-backdrop");
-  const closeBtn = overlay.querySelector(".promo-close");
-
-  if (backdrop) backdrop.addEventListener("click", close);
-  if (closeBtn) closeBtn.addEventListener("click", close);
-
-  // Show a few seconds after page load
-  setTimeout(show, 3500);
-}
+// ---------- MENU RENDERING ----------
 
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
@@ -95,13 +66,13 @@ function renderMenu(items) {
   });
 }
 
+// ---------- FILTERS / SEARCH ----------
+
 function applyFilters() {
   const activeBtn = document.querySelector(".filter-btn.active");
   const filter = activeBtn ? activeBtn.dataset.filter : "all";
-  const query = document
-    .getElementById("menu-search-input")
-    .value.toLowerCase()
-    .trim();
+  const searchInput = document.getElementById("menu-search-input");
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
   let filtered = MENU_ITEMS.slice();
 
@@ -141,6 +112,8 @@ function initFilters() {
   }
 }
 
+// ---------- DAILY FLAVOR ----------
+
 function pickDailyFlavor() {
   const el = document.getElementById("daily-flavor");
   if (!el || !MENU_ITEMS.length) return;
@@ -152,6 +125,8 @@ function pickDailyFlavor() {
     item.price
   )}`;
 }
+
+// ---------- NAV ----------
 
 function initNavToggle() {
   const toggle = document.querySelector(".nav-toggle");
@@ -173,10 +148,48 @@ function scrollToMenu() {
   menuSection.scrollIntoView({ behavior: "smooth" });
 }
 
+// ---------- FOOTER YEAR ----------
+
 function initFooterYear() {
   const y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 }
+
+// ---------- REXBURG PROMO POPUP ----------
+
+// store the timeout id so we can cancel it
+let promoTimeoutId = null;
+
+function showPromo() {
+  const overlay = document.getElementById("promo-overlay");
+  if (overlay) {
+    overlay.classList.remove("hidden");
+  }
+}
+
+function closePromo() {
+  const overlay = document.getElementById("promo-overlay");
+  if (overlay) {
+    overlay.classList.add("hidden");
+  }
+
+  // if a timer was set to (re)open it, cancel that
+  if (promoTimeoutId !== null) {
+    clearTimeout(promoTimeoutId);
+    promoTimeoutId = null;
+  }
+}
+
+// make closePromo usable from inline HTML
+window.closePromo = closePromo;
+
+function initPromoPopup() {
+  // show the popup 1.5s after page load
+  promoTimeoutId = setTimeout(showPromo, 1500);
+}
+
+
+// ---------- INIT ----------
 
 document.addEventListener("DOMContentLoaded", () => {
   renderMenu(MENU_ITEMS);

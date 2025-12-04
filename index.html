@@ -228,11 +228,15 @@
     </section>
   </main>
 
-    <!-- Rexburg Promo Popup -->
+<!-- Rexburg Promo Popup -->
   <div id="promo-overlay" class="promo-overlay hidden">
-    <div class="promo-backdrop"></div>
+    <!-- clicking the dark area closes it -->
+    <div class="promo-backdrop" onclick="closePromo()"></div>
+
     <div class="promo-modal">
-      <button class="promo-close" aria-label="Close promo">×</button>
+    <!-- clicking the X closes it -->
+    <button class="promo-close" aria-label="Close promo" onclick="closePromo()">×</button>
+
       <div class="promo-pill">Rexburg Shack · Coming Soon</div>
       <h2>Be first in line for cookies + soda.</h2>
       <p>
