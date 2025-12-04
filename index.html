@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>The Cookie Cottage | Handmade Cookies in Rigby & Rexburg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Handmade gourmet cookies from The Cookie Cottage in Rigby, Idaho – now coming to Rexburg. Small-batch, woman-owned, and dangerously delicious." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo-circle">c</div>
+        <div>
+          <div class="brand-text-title">The Cookie Cottage</div>
+          <div class="brand-text-sub">Rigby · Rexburg (coming soon)</div>
+        </div>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+
+      <nav class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#rexburg">Rexburg</a>
+        <a href="#story">Our Story</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.facebook.com/profile.php?id=100063707806424" target="_blank" class="nav-cta">
+          Facebook
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="hero">
+      <div class="hero-card">
+        <div class="hero-pill">
+          ✨ Small-batch, woman-owned · Rigby, ID
+        </div>
+        <h1 class="hero-title">
+          Cookies that taste like they were <span class="hero-highlight">baked just for you</span>.
+        </h1>
+        <p class="hero-subtitle">
+          150+ rotating flavors, hand-scooped and frosted by Jen and the Cottage crew.
+          No shortcuts, no weird ingredients – just really, really good cookies.
+        </p>
+
+        <div class="hero-cta-row">
+          <button class="btn-primary" onclick="scrollToMenu()">View Today’s Menu</button>
+          <a class="btn-secondary" href="https://www.doordash.com" target="_blank">
+            <span class="icon">🛵</span> Order on DoorDash
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span><strong>Rigby Shop:</strong> 143 S Clark St, Rigby, ID</span>
+          <span><strong>Hours:</strong> Tue–Fri 10–6 · Sat 10–4</span>
+        </div>
+      </div>
+
+      <aside class="hero-cookie-stack">
+        <div class="hero-badge">
+          New in Rexburg 🎉
+        </div>
+        <div class="cookie-grid-display">
+          <div class="cookie-tile">
+            <span class="name">Raspberry Cheesecake</span>
+            <span class="tag">Customer favorite</span>
+          </div>
+          <div class="cookie-tile">
+            <span class="name">Huckleberry Lemon Swirl</span>
+            <span class="tag">Idaho vibes only</span>
+          </div>
+          <div class="cookie-tile">
+            <span class="name">GF Chocolate Chipper</span>
+            <span class="tag">100% gluten-free</span>
+          </div>
+          <div class="cookie-tile">
+            <span class="name">Pumpkin Choc Chip</span>
+            <span class="tag">Seasonal</span>
+          </div>
+        </div>
+
+        <div class="daily-flavor" id="daily-flavor">
+          Today’s featured flavor: <strong>Loading…</strong>
+        </div>
+
+        <p class="hero-note">
+          Follow us on Facebook for flavor drops, sell-out alerts, and Rexburg updates. 💕
+        </p>
+      </aside>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu">
+      <div class="section-label">Menu</div>
+      <h2 class="section-title">Cottage Menu</h2>
+      <p class="section-intro">
+        We rotate about 15–20 flavors in the case at a time from a list of 150+.
+        Here’s a sample of what you might find this week:
+      </p>
+
+      <div class="menu-controls">
+        <div class="menu-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="cookie">Cookies</button>
+          <button class="filter-btn" data-filter="bar">Bars &amp; Loaves</button>
+          <button class="filter-btn" data-filter="mini">Mini Cookies</button>
+          <button class="filter-btn" data-filter="gf">Gluten-Free</button>
+          <button class="filter-btn" data-filter="box">Cookie Boxes</button>
+        </div>
+        <div class="menu-search">
+          <input type="text" id="menu-search-input" placeholder="Search flavors (raspberry, pumpkin, GF…)" />
+        </div>
+      </div>
+
+      <div id="menu-grid" class="menu-grid">
+        <!-- JS injects cards here -->
+      </div>
+
+      <p class="menu-note">
+        Want a specific flavor for an event or wedding? Email us at
+        <a href="mailto:thecookiecottagerigby@gmail.com">thecookiecottagerigby@gmail.com</a>
+        and we’ll see what we can do.
+      </p>
+    </section>
+
+    <!-- REXBURG SECTION -->
+    <section id="rexburg">
+      <div class="section-label">Rexburg</div>
+      <h2 class="section-title">Rexburg Shack · Coming Soon</h2>
+      <div class="rexburg-card">
+        <div>
+          <p>
+            We’re opening a tiny drive-thru shack just a few blocks from Madison High School.
+            Same cookies, plus sodas, faster lines, and all the pink cottage vibes.
+          </p>
+
+          <div class="pill-row">
+            <span class="pill">Drive-thru only (for now)</span>
+            <span class="pill">Student-friendly deals</span>
+            <span class="pill">Cookie + soda combos</span>
+          </div>
+
+          <div class="rexburg-countdown" id="rexburg-countdown">
+            Opening soon – follow us on Facebook for the official date. 🎀
+          </div>
+
+          <p class="rexburg-note">
+            Want us at your event, ward activity, or date-night thing? We’re totally down.
+            Ask about bulk platters and cookie bars.
+          </p>
+        </div>
+
+        <div class="rexburg-side">
+          <div class="rexburg-shack">
+            <div class="shack-roof"></div>
+            <div class="shack-body">
+              <span>Rexburg</span>
+            </div>
+            <div class="shack-window"></div>
+            <div class="shack-door"></div>
+          </div>
+          <p class="shack-caption">
+            The tiniest pink shack with the biggest cookie energy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">The Cottage Behind the Cookies</h2>
+      <div class="story-grid">
+        <div>
+          <p>
+            The Cookie Cottage started in Rigby after a simple fundraiser turned into a full-time baking obsession.
+            Jen began developing sugar cookie recipes at home, and soon the kitchen could barely keep up with demand.
+          </p>
+          <p>
+            Today, every cookie is still hand-scooped, hand-frosted, and made in small batches. No shortening,
+            no premade dough, no corporate shortcuts – just real ingredients, lots of butter, and a whole lot of
+            love (and pink).
+          </p>
+        </div>
+        <div>
+          <ul class="story-list">
+            <li>✔️ Woman-owned, family-run bakery</li>
+            <li>✔️ 150+ rotating flavors, plus seasonal favorites</li>
+            <li>✔️ Gluten-free options baked with extra care</li>
+            <li>✔️ Custom party platters, weddings, and events</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Visit · Order · Say Hi</h2>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Rigby Cottage</h3>
+          <p>143 South Clark Street<br />Rigby, Idaho</p>
+          <p><strong>Phone:</strong> <a href="tel:+19862759314">(986) 275-9314</a></p>
+          <p><strong>Email:</strong> <a href="mailto:thecookiecottagerigby@gmail.com">thecookiecottagerigby@gmail.com</a></p>
+          <p><strong>Hours:</strong><br />Tue–Fri 10am–6pm · Sat 10am–4pm</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>Online & Events</h3>
+          <ul class="contact-list">
+            <li>🛵 Order delivery on DoorDash (Rigby area)</li>
+            <li>🎉 Catering for parties, baptisms, weddings, and work events</li>
+            <li>📱 Follow flavor drops on Facebook + Instagram</li>
+          </ul>
+          <a class="btn-primary contact-btn" href="https://www.facebook.com/profile.php?id=100063707806424" target="_blank">
+            Follow on Facebook
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© <span id="year"></span> The Cookie Cottage · Rigby &amp; Rexburg, Idaho</p>
+      <p class="footer-small">
+        Made with butter, sugar, and probably too much pink.
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/menu-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

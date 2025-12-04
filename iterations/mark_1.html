@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cookie Cottage | Handmade Cookies in Rigby & Rexburg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Cookie Cottage – small-batch, handmade cookies in Rigby & Rexburg, Idaho. Real ingredients, rotating flavors, and cozy cottage vibes." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink: #f8dfe8;
+      --pink-soft: #fdeff4;
+      --cream: #fffaf4;
+      --brown: #4e3324;
+      --brown-soft: #7a5240;
+      --accent: #f6b8c5;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.08);
+      --radius-xl: 32px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top left, #fff5fb 0, #fffaf4 35%, #ffffff 100%);
+      color: var(--brown);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Layout */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 250, 244, 0.92);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fff8fe 0, #f7cfdc 40%, #f3b0c3 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-soft);
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .logo-text-main {
+      font-family: "Playfair Display", serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--pink));
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-pill);
+      background: var(--brown);
+      color: #fff;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 30px rgba(78, 51, 36, 0.25);
+    }
+
+    .nav-cta span {
+      font-size: 1.1rem;
+    }
+
+    .nav-toggle {
+      display: none;
+      border: none;
+      background: none;
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 2.5rem 0 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2.75rem;
+      align-items: center;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(248, 223, 232, 0.65);
+      border-radius: var(--radius-pill);
+      padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.78rem;
+      color: var(--brown-soft);
+    }
+
+    .pill-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fffdfd 0, #ffe9f3 40%, #f8c8da 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .hero-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.4rem, 3.4vw + 1.4rem, 3.4rem);
+      line-height: 1.08;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-title span.accent {
+      background: linear-gradient(120deg, #f6b8c5, #f38b9e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      max-width: 32rem;
+      color: var(--brown-soft);
+      margin-bottom: 1.3rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .badge {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(78, 51, 36, 0.08);
+      background: rgba(255, 250, 244, 0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      align-items: center;
+      margin-bottom: 1.3rem;
+    }
+
+    .btn-primary {
+      padding: 0.7rem 1.45rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: linear-gradient(120deg, var(--brown), #6a4533);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 14px 32px rgba(78, 51, 36, 0.35);
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 36px rgba(78, 51, 36, 0.4);
+    }
+
+    .btn-ghost {
+      padding: 0.7rem 1.2rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(78, 51, 36, 0.1);
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .hero-note {
+      font-size: 0.78rem;
+      color: var(--brown-soft);
+      opacity: 0.85;
+    }
+
+    .hero-note strong {
+      font-weight: 600;
+    }
+
+    .hero-media {
+      position: relative;
+    }
+
+    .hero-card {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cookie-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .cookie-tile {
+      border-radius: var(--radius-lg);
+      padding: 0.9rem;
+      background: radial-gradient(circle at top left, #fffdf9 0, #fbe7f1 50%, #f7d4de 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 120px;
+    }
+
+    .cookie-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .cookie-tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.85);
+      max-width: fit-content;
+      margin-bottom: 0.5rem;
+    }
+
+    .cookie-footer {
+      font-size: 0.78rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cookie-price {
+      font-weight: 600;
+    }
+
+    .hero-float-pill {
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      padding: 0.6rem 0.95rem;
+      border-radius: 20px 0 0 20px;
+      font-size: 0.76rem;
+      background: #fff;
+      box-shadow: 0 9px 20px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .hero-float-pill span.dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #6fdba8;
+    }
+
+    /* Section base */
+
+    section {
+      padding: 2.5rem 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(78, 51, 36, 0.6);
+      margin-bottom: 0.3rem;
+    }
+
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--brown-soft);
+      max-width: 32rem;
+      margin: 0.25rem auto 0;
+    }
+
+    /* Flavors */
+
+    .flavor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .flavor-card {
+      border-radius: var(--radius-lg);
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .flavor-tagline {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(78, 51, 36, 0.6);
+    }
+
+    .flavor-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .flavor-desc {
+      font-size: 0.85rem;
+      color: var(--brown-soft);
+    }
+
+    .flavor-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+    }
+
+    .pill-soft {
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-pill);
+      background: var(--pink-soft);
+      font-size: 0.75rem;
+    }
+
+    /* Story / Why Handmade */
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .story-card {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .story-card h3 {
+      font-family: "Playfair Display", serif;
+      margin-bottom: 0.35rem;
+      font-size: 1.3rem;
+    }
+
+    .story-card p {
+      font-size: 0.9rem;
+      color: var(--brown-soft);
+      margin-bottom: 0.6rem;
+    }
+
+    .story-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--brown-soft);
+    }
+
+    .story-list li {
+      margin-bottom: 0.35rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: flex-start;
+    }
+
+    .story-list li span {
+      font-size: 0.9rem;
+      margin-top: 0.08rem;
+    }
+
+    .story-photo {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top, #ffeef7, #f2c0ce, #f0aabf);
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-photo-inner {
+      position: absolute;
+      inset: 14%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff7f3 0, #ffd2e4 40%, #f0aac0 100%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4e3324;
+      font-family: "Playfair Display", serif;
+      text-align: center;
+      padding: 0 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    /* Locations */
+
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .location-card {
+      border-radius: var(--radius-lg);
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 1.1rem;
+      font-size: 0.88rem;
+    }
+
+    .location-name {
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .location-hours {
+      font-size: 0.8rem;
+      color: var(--brown-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .location-note {
+      font-size: 0.8rem;
+      color: var(--brown-soft);
+      opacity: 0.9;
+    }
+
+    /* CTA Section */
+
+    .cta {
+      background: linear-gradient(120deg, #fbe7f1, #fffaf4);
+      border-radius: var(--radius-xl);
+      padding: 1.6rem 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cta h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .cta p {
+      font-size: 0.9rem;
+      color: var(--brown-soft);
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Contact */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.75rem;
+      align-items: flex-start;
+    }
+
+    .contact-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+    }
+
+    .contact-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-row {
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(78, 51, 36, 0.6);
+    }
+
+    .contact-value {
+      font-size: 0.9rem;
+    }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--brown-soft);
+      margin-top: 0.4rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.86rem;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input, textarea {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(78, 51, 36, 0.15);
+      padding: 0.55rem 0.9rem;
+      font-family: inherit;
+      font-size: 0.86rem;
+      background: #fffdfc;
+    }
+
+    textarea {
+      min-height: 90px;
+      border-radius: 18px;
+      resize: vertical;
+      padding: 0.6rem 0.9rem;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(246, 184, 197, 0.3);
+    }
+
+    /* Footer */
+
+    footer {
+      padding: 1.6rem 0 2rem;
+      font-size: 0.8rem;
+      color: var(--brown-soft);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 880px) {
+      .hero-grid,
+      .split-grid,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .story-photo {
+        order: -1;
+      }
+
+      .flavor-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .locations-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        position: absolute;
+        inset: 56px 0 auto 0;
+        background: rgba(255, 250, 244, 0.98);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.9rem 1.5rem 1.1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        transform: translateY(-120%);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.2s ease-out;
+      }
+
+      .nav-links.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-cta {
+        margin-top: 0.4rem;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding-top: 1.8rem;
+      }
+
+      .hero-card {
+        margin-top: 0.4rem;
+      }
+
+      .flavor-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <div class="logo-wrap">
+          <div class="logo-circle">CC</div>
+          <div>
+            <div class="logo-text-main">Cookie Cottage</div>
+            <div class="logo-text-sub">Handmade Cookies • Idaho</div>
+          </div>
+        </div>
+
+        <button class="nav-toggle" aria-label="Toggle navigation" onclick="toggleNav()">
+          ☰
+        </button>
+
+        <div class="nav-links" id="navLinks">
+          <a href="#menu">Flavors</a>
+          <a href="#story">Our Story</a>
+          <a href="#locations">Locations</a>
+          <a href="#order">Order</a>
+          <a href="#contact" class="nav-cta">
+            Order Inquiry <span>→</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="pill-tag">
+              <div class="pill-dot">★</div>
+              Small-batch cookies, baked at 4am in Rigby.
+            </div>
+            <h1 class="hero-title">
+              Handmade cookies from a <span class="accent">little pink cottage</span>.
+            </h1>
+            <p class="hero-subtitle">
+              Cookie Cottage is a family-run bakery in Rigby & Rexburg, Idaho, known for
+              150+ rotating flavors, real ingredients, and cookies that taste like
+              someone actually woke up early for you.
+            </p>
+
+            <div class="badge-row">
+              <span class="badge">150+ rotating flavors</span>
+              <span class="badge">No shortening. No weird stuff.</span>
+              <span class="badge">Local, family-owned</span>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn-primary" onclick="scrollToSection('order')">
+                View Ordering Options
+              </button>
+              <button class="btn-ghost" onclick="scrollToSection('menu')">
+                See Today’s Signature Flavors
+              </button>
+            </div>
+            <p class="hero-note">
+              <strong>Now baking for Rexburg.</strong> Drive-through shack, Madison High
+              adjacent. Same Rigby recipes, new city to wreck.
+            </p>
+          </div>
+
+          <div class="hero-media">
+            <div class="hero-card" aria-label="Featured cookie flavors">
+              <div class="hero-cookie-grid">
+                <div class="cookie-tile">
+                  <div>
+                    <div class="cookie-name">Strawberry Milk</div>
+                    <div class="cookie-tag">House Favorite</div>
+                  </div>
+                  <div class="cookie-footer">
+                    <span class="cookie-price">$2.50</span>
+                    <span>Soft sugar cookie • whipped strawberry cream</span>
+                  </div>
+                </div>
+                <div class="cookie-tile">
+                  <div>
+                    <div class="cookie-name">Chocolate Cheesecake</div>
+                    <div class="cookie-tag">Rich & Dense</div>
+                  </div>
+                  <div class="cookie-footer">
+                    <span class="cookie-price">$2.50</span>
+                    <span>Cocoa base • cheesecake swirl</span>
+                  </div>
+                </div>
+                <div class="cookie-tile">
+                  <div>
+                    <div class="cookie-name">GF Chocolate Chipper</div>
+                    <div class="cookie-tag">Gluten-Free</div>
+                  </div>
+                  <div class="cookie-footer">
+                    <span class="cookie-price">$3.25</span>
+                    <span>Gluten-free • same chaos-level good</span>
+                  </div>
+                </div>
+                <div class="cookie-tile">
+                  <div>
+                    <div class="cookie-name">Turtle Cheesecake</div>
+                    <div class="cookie-tag">Weekend Only</div>
+                  </div>
+                  <div class="cookie-footer">
+                    <span class="cookie-price">$3.25</span>
+                    <span>Caramel • chocolate • pecans</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-float-pill">
+                <span class="dot"></span>
+                <span>Fresh within 2–3 days or it doesn’t make the case.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU / FLAVORS -->
+    <section id="menu">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-eyebrow">Signature Flavors</div>
+          <h2 class="section-title">Today at Cookie Cottage</h2>
+          <p class="section-subtitle">
+            Our menu rotates constantly, but here’s a taste of the kind of chaos you can expect.
+            Check Instagram stories for the daily lineup.
+          </p>
+        </div>
+
+        <div class="flavor-grid">
+          <article class="flavor-card">
+            <div class="flavor-tagline">Classic</div>
+            <div class="flavor-name">Sugar Cookie & Pink Frosting</div>
+            <p class="flavor-desc">
+              Soft vanilla sugar cookie with our signature whipped pink frosting. The
+              one people “accidentally” eat 3 of.
+            </p>
+            <div class="flavor-meta">
+              <span class="pill-soft">$2.50</span>
+              <span>Always on the menu.</span>
+            </div>
+          </article>
+
+          <article class="flavor-card">
+            <div class="flavor-tagline">Gluten-Free</div>
+            <div class="flavor-name">GF Chocolate Chipper</div>
+            <p class="flavor-desc">
+              Crisp edges, soft center, stacked with chocolate chunks. Gluten-free
+              without tasting like a compromise.
+            </p>
+            <div class="flavor-meta">
+              <span class="pill-soft">$3.25</span>
+              <span>Limited batch.</span>
+            </div>
+          </article>
+
+          <article class="flavor-card">
+            <div class="flavor-tagline">Rich</div>
+            <div class="flavor-name">Raspberry Cheesecake Bar</div>
+            <p class="flavor-desc">
+              A buttery crust, creamy cheesecake, and a tart raspberry swirl. Not a
+              cookie. You’ll forgive us.
+            </p>
+            <div class="flavor-meta">
+              <span class="pill-soft">$3.25</span>
+              <span>Friday–Saturday.</span>
+            </div>
+          </article>
+
+          <article class="flavor-card">
+            <div class="flavor-tagline">Chocolate</div>
+            <div class="flavor-name">Under the Sea</div>
+            <p class="flavor-desc">
+              Blue raspberry + lemon frosting on a sugar cookie base. It shouldn’t
+              work. But it very much does.
+            </p>
+            <div class="flavor-meta">
+              <span class="pill-soft">$2.50</span>
+              <span>Rotating feature.</span>
+            </div>
+          </article>
+
+          <article class="flavor-card">
+            <div class="flavor-tagline">Seasonal</div>
+            <div class="flavor-name">Pumpkin Chocolate Chip</div>
+            <p class="flavor-desc">
+              Soft pumpkin cookie loaded with chocolate chips and cozy fall spices.
+            </p>
+            <div class="flavor-meta">
+              <span class="pill-soft">$2.50</span>
+              <span>Fall only.</span>
+            </div>
+          </article>
+
+          <article class="flavor-card">
+            <div class="flavor-tagline">Premium</div>
+            <div class="flavor-name">Turtle Cheesecake Cookie</div>
+            <p class="flavor-desc">
+              Caramel-drizzled cheesecake filling, milk chocolate, and toasted pecans
+              on a chocolate base.
+            </p>
+            <div class="flavor-meta">
+              <span class="pill-soft">$3.25</span>
+              <span>Special drop.</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story">
+      <div class="container">
+        <div class="split-grid">
+          <div>
+            <div class="section-heading" style="text-align:left;margin-bottom:0.8rem;">
+              <div class="section-eyebrow">Our Story</div>
+              <h2 class="section-title" style="margin-bottom:0.2rem;">Handmade on purpose.</h2>
+              <p class="section-subtitle" style="margin:0;">
+                No corporate formulas. No frozen dough trucks. Just a mom, a mixer,
+                and a ridiculous amount of butter.
+              </p>
+            </div>
+
+            <div class="story-card">
+              <h3>Why your cookie tastes different here</h3>
+              <p>
+                Jen, the owner and baker, starts at 4:00am in Rigby making dough,
+                frosting, and rotating through up to 150 flavors she’s developed over
+                years. Every cookie is hand-scooped and frosted in small batches.
+              </p>
+              <ul class="story-list">
+                <li><span>•</span> <span><strong>Real ingredients</strong> – no shortening, no weird preservatives.</span></li>
+                <li><span>•</span> <span><strong>Short shelf life on purpose</strong> – cookies are kept 2–3 days max.</span></li>
+                <li><span>•</span> <span><strong>Small team</strong> – about three core employees keep quality insane.</span></li>
+                <li><span>•</span> <span><strong>Local first</strong> – Rigby roots, now bringing the chaos to Rexburg.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="story-photo" aria-hidden="true">
+            <div class="story-photo-inner">
+              Baked in Rigby at 4am.<br/>
+              Boxed up in a pink cottage.<br/>
+              Devoured in Rexburg by 4pm.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ORDER / CTA -->
+    <section id="order">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h3>Ready to order Cookie Cottage?</h3>
+            <p>
+              Walk in, drive through, or order ahead. We’ll keep the oven running – you just decide how many boxes you’re “sharing.”
+            </p>
+          </div>
+          <div class="cta-actions">
+            <button class="btn-primary">
+              Order for Pickup (Rigby)
+            </button>
+            <button class="btn-ghost">
+              Rexburg Shack – Coming Soon
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCATIONS -->
+    <section id="locations">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-eyebrow">Locations</div>
+          <h2 class="section-title">Find Cookie Cottage</h2>
+          <p class="section-subtitle">
+            Two Idaho spots, same pink cottage energy. Hours may shift seasonally – check Facebook for holiday updates.
+          </p>
+        </div>
+
+        <div class="locations-grid">
+          <div class="location-card">
+            <div class="location-name">Rigby – Original Cottage</div>
+            <div class="location-hours">
+              143 S Clark St, Rigby, ID 83442<br/>
+              Tue–Fri: 10am–6pm • Sat: 10am–4pm<br/>
+              Sun–Mon: Closed
+            </div>
+            <p class="location-note">
+              Our tiny Pink Cottage where Jen bakes, frosts, and rotates flavors.
+              Walk in, grab a box, or order ahead for events and parties.
+            </p>
+          </div>
+
+          <div class="location-card">
+            <div class="location-name">Rexburg – Drive-Thru Shack</div>
+            <div class="location-hours">
+              Near Madison High School, Rexburg, ID<br/>
+              Hours: Coming soon with grand opening announcement.
+            </div>
+            <p class="location-note">
+              Small-but-mighty drive-through focused on speed, soda pairings, and
+              getting boxes into cars as fast as cravings hit. Follow us on
+              Instagram for opening day.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-eyebrow">Contact</div>
+          <h2 class="section-title">Catering, events, & questions</h2>
+          <p class="section-subtitle">
+            Need cookies for a wedding, baptism, graduation, ward party, or “just because it’s Tuesday”? Send us a note.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Bakery Details</h3>
+            <div class="contact-row">
+              <div class="contact-label">Email</div>
+              <div class="contact-value">cookiecottagerigby@gmail.com</div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">(986) 275-9314</div>
+            </div>
+            <div class="contact-row">
+              <div class="contact-label">Social</div>
+              <div class="contact-value">
+                Facebook: Cookie Cottage • Instagram: @cookiecottage (new)
+              </div>
+            </div>
+            <p class="contact-note">
+              For large orders (50+ cookies), please contact us at least 48 hours
+              ahead so Jen can plan dough and frosting.
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <h3>Send an Inquiry</h3>
+            <form>
+              <div>
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="Cookie-loving human" />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="you@example.com" />
+              </div>
+              <div>
+                <label for="message">What can we bake for you?</label>
+                <textarea id="message" placeholder="Event date, quantity, favorite flavors..."></textarea>
+              </div>
+              <button type="button" class="btn-primary">
+                Submit Request
+              </button>
+              <p class="contact-note">
+                This is a demo form – for now, reach out via email or Facebook
+                message and we’ll get back to you as fast as the oven preheats.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Cookie Cottage. Handmade in Rigby, Idaho.</div>
+        <div class="footer-links">
+          <a href="#hero">Back to top</a>
+          <a href="#menu">Flavors</a>
+          <a href="#order">Order</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  function toggleNav() {
+    const navLinks = document.getElementById("navLinks");
+    navLinks.classList.toggle("open");
+  }
+
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
