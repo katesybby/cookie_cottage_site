@@ -17,6 +17,39 @@ function createTagElements(item) {
   return [...new Set(tags)];
 }
 
+function initPromoPopup() {
+  const overlay = document.getElementById("promo-overlay");
+  if (!overlay) return;
+
+  const CLOSE_KEY = "cc-rexburg-promo-seen";
+
+  try {
+    if (localStorage.getItem(CLOSE_KEY)) return;
+  } catch (e) {
+    // ignore if localStorage is blocked
+  }
+
+  const show = () => {
+    overlay.classList.remove("hidden");
+  };
+
+  const close = () => {
+    overlay.classList.add("hidden");
+    try {
+      localStorage.setItem(CLOSE_KEY, "1");
+    } catch (e) {}
+  };
+
+  const backdrop = overlay.querySelector(".promo-backdrop");
+  const closeBtn = overlay.querySelector(".promo-close");
+
+  if (backdrop) backdrop.addEventListener("click", close);
+  if (closeBtn) closeBtn.addEventListener("click", close);
+
+  // Show a few seconds after page load
+  setTimeout(show, 3500);
+}
+
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
   if (!grid) return;
@@ -151,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pickDailyFlavor();
   initNavToggle();
   initFooterYear();
+  initPromoPopup();
 });
 
 // expose scrollToMenu globally for button onclick
