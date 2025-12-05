@@ -19,7 +19,16 @@ function createTagElements(item) {
   return [...new Set(tags)];
 }
 
-// ---------- MENU RENDERING ----------
+// ---------- DRINK ITEMS (for Sodas & Cocoa section) ----------
+
+const SODA_ITEMS = [
+  { name: "Build-Your-Own Soda", price: 2.5 },
+  { name: "Cottage Swizzle", price: 3.0 },
+  { name: "Rexburg Rocket Fuel", price: 3.0 },
+  { name: "Seasonal Hot Cocoa", price: 3.25 }
+];
+
+// ---------- MENU RENDERING (COOKIES/BARS/MINIS/BOXES) ----------
 
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
@@ -63,7 +72,7 @@ function renderMenu(items) {
     card.appendChild(header);
     card.appendChild(tagWrap);
 
-    // subtle qty controls instead of big button
+    // subtle qty controls instead of a big loud button
     const controls = document.createElement("div");
     controls.className = "menu-cart-controls";
 
@@ -102,8 +111,6 @@ function renderMenu(items) {
     grid.appendChild(card);
   });
 }
-
-
 
 // ---------- FILTERS / SEARCH ----------
 
@@ -196,7 +203,6 @@ function initFooterYear() {
 
 // ---------- REXBURG PROMO POPUP ----------
 
-// store the timeout id so we can cancel it
 let promoTimeoutId = null;
 
 function showPromo() {
@@ -212,7 +218,6 @@ function closePromo() {
     overlay.classList.add("hidden");
   }
 
-  // if a timer was set to (re)open it, cancel that
   if (promoTimeoutId !== null) {
     clearTimeout(promoTimeoutId);
     promoTimeoutId = null;
@@ -223,11 +228,9 @@ function closePromo() {
 window.closePromo = closePromo;
 
 function initPromoPopup() {
-  // show the popup 1.5s after page load
   promoTimeoutId = setTimeout(showPromo, 1500);
 }
 
-// ---------- SIMPLE CART ----------
 // ---------- SIMPLE CART (SIDEBAR) ----------
 
 const cart = []; // array of { name, price, qty }
@@ -263,10 +266,91 @@ function removeOneFromCart(name) {
   updateCartDisplay();
 }
 
+function buildOrderSummary() {
+  if (!cart.length) return "";
+
+  const lines = cart.map(entry => `${entry.qty} × ${entry.name}`);
+  const total = cart.reduce((sum, i) => sum + i.qty * i.price, 0);
+
+  return `${lines.join(", ")} (Total ${formatPrice(total)})`;
+}
+
+// ---------- SODAS / COCOA CART BINDINGS ----------
+
+function initSodaCartControls() {
+  const sodaSection = document.getElementById("sodas");
+  if (!sodaSection) return;
+
+  const cards = sodaSection.querySelectorAll(".menu-card");
+
+  cards.forEach(card => {
+    const nameEl = card.querySelector(".menu-name");
+    if (!nameEl) return;
+
+    const name = nameEl.textContent.trim();
+    const item = SODA_ITEMS.find(d => d.name === name);
+    if (!item) return; // skip any card not in our list
+
+    // Avoid adding controls twice if function runs again
+    if (card.querySelector(".menu-cart-controls")) return;
+
+    const controls = document.createElement("div");
+    controls.className = "menu-cart-controls";
+
+    const label = document.createElement("span");
+    label.className = "cart-qty-label";
+    label.textContent = "Qty:";
+
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "cart-qty-btn";
+    minusBtn.textContent = "−";
+
+    const qtySpan = document.createElement("span");
+    qtySpan.className = "cart-qty-display";
+    qtySpan.textContent = getCartQuantity(name);
+    qtySpan.dataset.itemName = name; // for refresh later
+
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "cart-qty-btn";
+    plusBtn.textContent = "+";
+
+    minusBtn.addEventListener("click", () => {
+      removeOneFromCart(name);
+      qtySpan.textContent = getCartQuantity(name);
+    });
+
+    plusBtn.addEventListener("click", () => {
+      addToCart(item);
+      qtySpan.textContent = getCartQuantity(name);
+    });
+
+    controls.appendChild(label);
+    controls.appendChild(minusBtn);
+    controls.appendChild(qtySpan);
+    controls.appendChild(plusBtn);
+
+    card.appendChild(controls);
+  });
+}
+
+function refreshSodaQuantities() {
+  const sodaSection = document.getElementById("sodas");
+  if (!sodaSection) return;
+
+  const spans = sodaSection.querySelectorAll(".cart-qty-display[data-item-name]");
+  spans.forEach(span => {
+    const name = span.dataset.itemName;
+    span.textContent = getCartQuantity(name);
+  });
+}
+
+// ---------- CART UI UPDATE ----------
+
 function updateCartDisplay() {
   const countEl = document.getElementById("cart-count");
   const itemsContainer = document.getElementById("cart-items");
   const totalEl = document.getElementById("cart-total");
+  const summaryEl = document.getElementById("cart-summary-text");
 
   // item count in navbar
   const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
@@ -281,9 +365,13 @@ function updateCartDisplay() {
     empty.className = "menu-note";
     empty.textContent = "Your cart is empty. Add some cookies from the menu. 🍪";
     itemsContainer.appendChild(empty);
+
     if (totalEl) totalEl.textContent = "$0.00";
-    // also refresh menu so quantities show 0
+    if (summaryEl) summaryEl.textContent = "";
+
+    // refresh menus so quantities show 0
     applyFilters();
+    refreshSodaQuantities();
     return;
   }
 
@@ -353,10 +441,14 @@ function updateCartDisplay() {
   });
 
   if (totalEl) totalEl.textContent = formatPrice(total);
+  if (summaryEl) summaryEl.textContent = buildOrderSummary();
 
-  // refresh menu cards so their qty displays match
+  // refresh cookie menu + soda qty pills to match cart
   applyFilters();
+  refreshSodaQuantities();
 }
+
+// ---------- CART PANEL TOGGLING ----------
 
 function toggleCartPanel(show) {
   const panel = document.getElementById("cart-panel");
@@ -377,6 +469,8 @@ function initCartUI() {
   const toggle = document.getElementById("cart-toggle");
   const panel = document.getElementById("cart-panel");
   const closeBtn = panel ? panel.querySelector(".cart-close") : null;
+  const phoneBtn = document.getElementById("phone-order-btn");
+  const doordashBtn = document.getElementById("doordash-btn");
   const checkoutBtn = document.getElementById("checkout-btn");
 
   if (toggle) {
@@ -390,13 +484,30 @@ function initCartUI() {
     closeBtn.addEventListener("click", () => toggleCartPanel(false));
   }
 
+  if (phoneBtn) {
+    phoneBtn.addEventListener("click", () => {
+      const summary = buildOrderSummary();
+      console.log("Order summary for phone call:", summary);
+      window.location.href = "tel:+19862759314";
+    });
+  }
+
+  if (doordashBtn) {
+    doordashBtn.addEventListener("click", () => {
+      window.open(
+        "https://www.doordash.com/store/the-cookie-cottage-rigby-33696829/61183157/?srsltid=AfmBOopzQPMUwSbwQGu4HSewmCcM_Xl4qHdB5wFFmu-jeilkYeKdzmhK",
+        "_blank"
+      );
+    });
+  }
+
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", () => {
-      window.location.href = "checkout.html";
+      // placeholder, you can swap to real flow later
+      alert("Thanks! Show this cart to the Cottage crew at the window to finish your order.");
     });
   }
 }
-
 
 // ---------- INIT ----------
 
@@ -408,6 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initFooterYear();
   initPromoPopup();
   initCartUI();
+  initSodaCartControls();
   updateCartDisplay();
 });
 
