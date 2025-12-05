@@ -19,16 +19,102 @@ function createTagElements(item) {
   return [...new Set(tags)];
 }
 
-// ---------- DRINK ITEMS (for Sodas & Cocoa section) ----------
+// ---------- SODA DATA ----------
 
 const SODA_ITEMS = [
-  { name: "Build-Your-Own Soda", price: 2.5 },
-  { name: "Cottage Swizzle", price: 3.0 },
-  { name: "Rexburg Rocket Fuel", price: 3.0 },
-  { name: "Seasonal Hot Cocoa", price: 3.25 }
+  {
+    name: "Coconut Cove",
+    price: 2.75,
+    description: "Coke + coconut + fresh lime + cream."
+  },
+  {
+    name: "The Study Buddy",
+    price: 2.75,
+    description: "Dr Pepper + raspberry + vanilla + cream."
+  },
+  {
+    name: "BY-Who?",
+    price: 2.75,
+    description: "Mountain Dew + passionfruit + mango + fresh lime."
+  },
+  {
+    name: "Idaho Sunset",
+    price: 2.75,
+    description: "Sprite + peach + strawberry purée + cream."
+  },
+  {
+    name: "The Cottage Classic",
+    price: 2.75,
+    description: "Coke + cherry + vanilla + cream."
+  },
+  {
+    name: "Midnight Oil",
+    price: 3.0,
+    description: "Cola + black cherry + coconut + cream."
+  },
+  {
+    name: "Eternal Winter",
+    price: 3.0,
+    description: "Sprite + blue raspberry + coconut + whipped cream."
+  },
+  {
+    name: "Dew Drop Dream",
+    price: 3.0,
+    description: "Mountain Dew + strawberry + kiwi + cream."
+  },
+  {
+    name: "The Freshman 15",
+    price: 3.0,
+    description: "Root Beer + caramel + toasted marshmallow + heavy cream."
+  },
+  {
+    name: "Gamma Burst (Energy)",
+    price: 3.25,
+    description: "Energy base + green apple + kiwi + fresh lime."
+  },
+  {
+    name: "Pineapple Reactor (Energy)",
+    price: 3.25,
+    description: "Energy + pineapple + coconut + cream."
+  },
+  {
+    name: "Gold Rush (Energy)",
+    price: 3.25,
+    description: "Energy + peach + strawberry purée + cream."
+  },
+  {
+    name: "Warm Caramel Cottage Cider",
+    price: 3.25,
+    description: "Hot apple cider + caramel + whipped cream."
+  },
+  {
+    name: "Toasty Vanilla Root Beer",
+    price: 3.0,
+    description: "Heated Root Beer + vanilla cream."
+  },
+  {
+    name: "Sugar Cookie White Cocoa",
+    price: 3.25,
+    description: "White hot chocolate + almond + vanilla + whipped cream + sugar cookie crumble."
+  },
+  {
+    name: "Fresh Squeeze Twist (Lighter)",
+    price: 2.75,
+    description: "Sprite Zero + fresh lime + fresh orange + sugar-free coconut."
+  },
+  {
+    name: "Berry Breeze (Lighter)",
+    price: 2.75,
+    description: "Sparkling water + sugar-free raspberry + sugar-free vanilla."
+  },
+  {
+    name: "CottageClean (Lighter)",
+    price: 2.5,
+    description: "Filtered sparkling water + lemon + mint + light sweetener."
+  }
 ];
 
-// ---------- MENU RENDERING (COOKIES/BARS/MINIS/BOXES) ----------
+// ---------- MENU RENDERING (COOKIES / BARS / MINIS / BOXES) ----------
 
 function renderMenu(items) {
   const grid = document.getElementById("menu-grid");
@@ -72,7 +158,7 @@ function renderMenu(items) {
     card.appendChild(header);
     card.appendChild(tagWrap);
 
-    // subtle qty controls instead of a big loud button
+    // subtle qty controls at bottom
     const controls = document.createElement("div");
     controls.className = "menu-cart-controls";
 
@@ -112,13 +198,94 @@ function renderMenu(items) {
   });
 }
 
-// ---------- FILTERS / SEARCH ----------
+// ---------- SODA RENDERING ----------
+
+function renderSodaMenu() {
+  const grid = document.getElementById("soda-grid");
+  if (!grid || !SODA_ITEMS.length) return;
+
+  grid.innerHTML = "";
+
+  SODA_ITEMS.forEach(item => {
+    const card = document.createElement("article");
+    card.className = "menu-card";
+
+    const header = document.createElement("div");
+    header.className = "menu-card-header";
+
+    const nameEl = document.createElement("h3");
+    nameEl.className = "menu-name";
+    nameEl.textContent = item.name;
+
+    const priceEl = document.createElement("span");
+    priceEl.className = "menu-price";
+    priceEl.textContent = formatPrice(item.price);
+
+    header.appendChild(nameEl);
+    header.appendChild(priceEl);
+    card.appendChild(header);
+
+    if (item.description) {
+      const desc = document.createElement("p");
+      desc.className = "menu-note";
+      desc.textContent = item.description;
+      card.appendChild(desc);
+    }
+
+    // subtle qty controls at bottom
+    const controls = document.createElement("div");
+    controls.className = "menu-cart-controls";
+
+    const label = document.createElement("span");
+    label.className = "cart-qty-label";
+    label.textContent = "Qty:";
+
+    const minusBtn = document.createElement("button");
+    minusBtn.className = "cart-qty-btn";
+    minusBtn.textContent = "−";
+
+    const qtySpan = document.createElement("span");
+    qtySpan.className = "cart-qty-display";
+    qtySpan.textContent = getCartQuantity(item.name);
+
+    const plusBtn = document.createElement("button");
+    plusBtn.className = "cart-qty-btn";
+    plusBtn.textContent = "+";
+
+    minusBtn.addEventListener("click", () => {
+      removeOneFromCart(item.name);
+      qtySpan.textContent = getCartQuantity(item.name);
+    });
+
+    plusBtn.addEventListener("click", () => {
+      addToCart(item);
+      qtySpan.textContent = getCartQuantity(item.name);
+    });
+
+    controls.appendChild(label);
+    controls.appendChild(minusBtn);
+    controls.appendChild(qtySpan);
+    controls.appendChild(plusBtn);
+
+    card.appendChild(controls);
+    grid.appendChild(card);
+  });
+}
+
+// ---------- FILTERS / SEARCH (COOKIES) ----------
 
 function applyFilters() {
   const activeBtn = document.querySelector(".filter-btn.active");
   const filter = activeBtn ? activeBtn.dataset.filter : "all";
-  const searchInput = document.getElementById("menu-search-input");
-  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+  // supports multiple search inputs with class .menu-search-input
+  const searchInputs = document.querySelectorAll(".menu-search-input, #menu-search-input");
+  let query = "";
+  searchInputs.forEach(input => {
+    if (!input) return;
+    const val = input.value.toLowerCase().trim();
+    if (val) query = val; // last non-empty wins
+  });
 
   let filtered = MENU_ITEMS.slice();
 
@@ -150,12 +317,12 @@ function initFilters() {
     });
   });
 
-  const searchInput = document.getElementById("menu-search-input");
-  if (searchInput) {
-    searchInput.addEventListener("input", () => {
+  const searchInputs = document.querySelectorAll(".menu-search-input, #menu-search-input");
+  searchInputs.forEach(input => {
+    input.addEventListener("input", () => {
       applyFilters();
     });
-  }
+  });
 }
 
 // ---------- DAILY FLAVOR ----------
@@ -275,75 +442,6 @@ function buildOrderSummary() {
   return `${lines.join(", ")} (Total ${formatPrice(total)})`;
 }
 
-// ---------- SODAS / COCOA CART BINDINGS ----------
-
-function initSodaCartControls() {
-  const sodaSection = document.getElementById("sodas");
-  if (!sodaSection) return;
-
-  const cards = sodaSection.querySelectorAll(".menu-card");
-
-  cards.forEach(card => {
-    const nameEl = card.querySelector(".menu-name");
-    if (!nameEl) return;
-
-    const name = nameEl.textContent.trim();
-    const item = SODA_ITEMS.find(d => d.name === name);
-    if (!item) return; // skip any card not in our list
-
-    // Avoid adding controls twice if function runs again
-    if (card.querySelector(".menu-cart-controls")) return;
-
-    const controls = document.createElement("div");
-    controls.className = "menu-cart-controls";
-
-    const label = document.createElement("span");
-    label.className = "cart-qty-label";
-    label.textContent = "Qty:";
-
-    const minusBtn = document.createElement("button");
-    minusBtn.className = "cart-qty-btn";
-    minusBtn.textContent = "−";
-
-    const qtySpan = document.createElement("span");
-    qtySpan.className = "cart-qty-display";
-    qtySpan.textContent = getCartQuantity(name);
-    qtySpan.dataset.itemName = name; // for refresh later
-
-    const plusBtn = document.createElement("button");
-    plusBtn.className = "cart-qty-btn";
-    plusBtn.textContent = "+";
-
-    minusBtn.addEventListener("click", () => {
-      removeOneFromCart(name);
-      qtySpan.textContent = getCartQuantity(name);
-    });
-
-    plusBtn.addEventListener("click", () => {
-      addToCart(item);
-      qtySpan.textContent = getCartQuantity(name);
-    });
-
-    controls.appendChild(label);
-    controls.appendChild(minusBtn);
-    controls.appendChild(qtySpan);
-    controls.appendChild(plusBtn);
-
-    card.appendChild(controls);
-  });
-}
-
-function refreshSodaQuantities() {
-  const sodaSection = document.getElementById("sodas");
-  if (!sodaSection) return;
-
-  const spans = sodaSection.querySelectorAll(".cart-qty-display[data-item-name]");
-  spans.forEach(span => {
-    const name = span.dataset.itemName;
-    span.textContent = getCartQuantity(name);
-  });
-}
-
 // ---------- CART UI UPDATE ----------
 
 function updateCartDisplay() {
@@ -355,6 +453,15 @@ function updateCartDisplay() {
   // item count in navbar
   const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
   if (countEl) countEl.textContent = totalCount;
+
+  const countWrap = document.getElementById("cart-count-wrap");
+  if (countWrap) {
+    if (totalCount > 0) {
+      countWrap.classList.remove("hidden");
+    } else {
+      countWrap.classList.add("hidden");
+    }
+  }
 
   if (!itemsContainer) return;
 
@@ -371,7 +478,7 @@ function updateCartDisplay() {
 
     // refresh menus so quantities show 0
     applyFilters();
-    refreshSodaQuantities();
+    renderSodaMenu();
     return;
   }
 
@@ -443,9 +550,9 @@ function updateCartDisplay() {
   if (totalEl) totalEl.textContent = formatPrice(total);
   if (summaryEl) summaryEl.textContent = buildOrderSummary();
 
-  // refresh cookie menu + soda qty pills to match cart
+  // refresh cookie menu + soda qty to match cart
   applyFilters();
-  refreshSodaQuantities();
+  renderSodaMenu();
 }
 
 // ---------- CART PANEL TOGGLING ----------
@@ -503,7 +610,6 @@ function initCartUI() {
 
   if (checkoutBtn) {
     checkoutBtn.addEventListener("click", () => {
-      // placeholder, you can swap to real flow later
       alert("Thanks! Show this cart to the Cottage crew at the window to finish your order.");
     });
   }
@@ -512,14 +618,14 @@ function initCartUI() {
 // ---------- INIT ----------
 
 document.addEventListener("DOMContentLoaded", () => {
-  renderMenu(MENU_ITEMS);
-  initFilters();
+  renderMenu(MENU_ITEMS);     // from menu-data.js
+  renderSodaMenu();           // builds drink cards + qty controls
+  initFilters();              // filters + search for cookies
   pickDailyFlavor();
   initNavToggle();
   initFooterYear();
   initPromoPopup();
   initCartUI();
-  initSodaCartControls();
   updateCartDisplay();
 });
 
